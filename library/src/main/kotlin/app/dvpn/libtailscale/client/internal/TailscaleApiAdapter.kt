@@ -1,0 +1,66 @@
+@file:Suppress("ConstPropertyName")
+
+package app.dvpn.libtailscale.client.internal
+
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
+import libtailscale.LocalAPIResponse
+import kotlin.coroutines.CoroutineContext
+
+internal class TailscaleApiAdapter(
+    private val api: libtailscale.Application,
+    private val json: Json,
+    private val coroutineContext: CoroutineContext = Dispatchers.IO,
+) {
+
+    suspend fun get(
+        endpoint: Endpoint,
+        body: Any?,
+    ): LocalAPIResponse {
+        return request(endpoint, Method.Get, body)
+    }
+
+    suspend fun post(
+        endpoint: Endpoint,
+        body: Any?,
+    ): LocalAPIResponse {
+        return request(endpoint, Method.Post, body)
+    }
+
+    private suspend fun request(
+        endpoint: Endpoint,
+        method: Method,
+        body: Any?,
+    ): LocalAPIResponse {
+        return withContext(coroutineContext) {
+            val bodyInputStream = body
+                ?.let(json::encodeToString)
+                ?.toByteArray()
+                ?.let(::InputStreamAdapter)
+
+            api.callLocalAPI(
+                RequestTimeoutMillis,
+                method.value,
+                "$BaseUrl/${endpoint.path}",
+                bodyInputStream,
+            )
+        }
+    }
+
+    enum class Endpoint(val path: String) {
+        Prefs("prefs"),
+        Start("start"),
+        Logout("logout");
+    }
+
+    private enum class Method(val value: String) {
+        Get("GET"),
+        Post("Post"),
+    }
+
+    private companion object {
+        private const val BaseUrl = "/localapi/v0/"
+        private const val RequestTimeoutMillis = 10_000L
+    }
+}
