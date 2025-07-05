@@ -28,6 +28,13 @@ internal class TailscaleApiAdapter(
         return request(endpoint, Method.Post, body)
     }
 
+    suspend fun patch(
+        endpoint: Endpoint,
+        body: Any?,
+    ): LocalAPIResponse {
+        return request(endpoint, Method.Patch, body)
+    }
+
     private suspend fun request(
         endpoint: Endpoint,
         method: Method,
@@ -57,7 +64,8 @@ internal class TailscaleApiAdapter(
 
     private enum class Method(val value: String) {
         Get("GET"),
-        Post("Post"),
+        Post("POST"),
+        Patch("PATCH"),
     }
 
     private companion object {

@@ -4,6 +4,7 @@ package app.dvpn.libtailscale.client.internal
 
 import app.dvpn.libtailscale.client.internal.adapter.TailscaleApiAdapter
 import app.dvpn.libtailscale.client.internal.adapter.TailscaleApiAdapter.Endpoint
+import app.dvpn.libtailscale.client.internal.model.IpnStatus
 import app.dvpn.libtailscale.client.internal.model.StartOptions
 import app.dvpn.libtailscale.client.internal.model.TailscalePreferences
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -21,10 +22,22 @@ internal class TailscaleApi(
         adapter.post(Endpoint.Start, body)
     }
 
+    suspend fun getStatus(): IpnStatus {
+        val response = adapter.get(Endpoint.Status)
+        return response.decode<IpnStatus>()
+    }
+
     suspend fun getPreferences(): TailscalePreferences {
-        return runCatching { adapter.get(Endpoint.Preferences) }
-            .mapCatching { response -> response.decode<TailscalePreferences>() }
-            .getOrThrow()
+        val response = adapter.get(Endpoint.Preferences)
+        return response.decode<TailscalePreferences>()
+    }
+
+    suspend fun editPreferences(
+        update: TailscalePreferences.() -> TailscalePreferences
+    ): TailscalePreferences {
+        val data = json.encodeToString(getPreferences().update()).toByteArray()
+        val response = adapter.patch(Endpoint.Preferences, data)
+        return response.decode<TailscalePreferences>()
     }
 
     private inline fun <reified T : Any> LocalAPIResponse.decode(): T {
