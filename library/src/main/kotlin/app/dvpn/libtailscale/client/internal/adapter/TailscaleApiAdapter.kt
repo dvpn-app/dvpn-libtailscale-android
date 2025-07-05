@@ -59,6 +59,7 @@ internal class TailscaleApiAdapter(
         Preferences("prefs"),
         Start("start"),
         Status("status"),
+        CurrentProfile("profiles/current"),
         Logout("logout"),
         EnableExitNode("set-use-exit-node-enabled?enabled=true"),
         DisableExitNode("set-use-exit-node-enabled?enabled=false"),
