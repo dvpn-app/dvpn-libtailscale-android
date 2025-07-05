@@ -23,7 +23,7 @@ internal class TailscaleApiAdapter(
 
     suspend fun post(
         endpoint: Endpoint,
-        body: Any?,
+        body: Any? = null,
     ): LocalAPIResponse {
         return request(endpoint, Method.Post, body)
     }
@@ -59,7 +59,9 @@ internal class TailscaleApiAdapter(
         Preferences("prefs"),
         Start("start"),
         Status("status"),
-        Logout("logout");
+        Logout("logout"),
+        EnableExitNode("set-use-exit-node-enabled?enabled=true"),
+        DisableExitNode("set-use-exit-node-enabled?enabled=false"),
     }
 
     private enum class Method(val value: String) {

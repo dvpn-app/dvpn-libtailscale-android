@@ -40,6 +40,17 @@ internal class TailscaleApi(
         return response.decode<TailscalePreferences>()
     }
 
+    suspend fun setUseExitNode(enabled: Boolean): TailscalePreferences {
+        val endpoint = if (enabled) {
+            Endpoint.EnableExitNode
+        } else {
+            Endpoint.DisableExitNode
+        }
+        val response = adapter.post(endpoint)
+
+        return response.decode<TailscalePreferences>()
+    }
+
     private inline fun <reified T : Any> LocalAPIResponse.decode(): T {
         val data = bodyBytes() ?: ByteArray(0)
         return json.decodeFromStream<T>(data.inputStream())
