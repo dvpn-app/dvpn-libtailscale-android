@@ -1,6 +1,6 @@
 @file:Suppress("ConstPropertyName")
 
-package app.dvpn.libtailscale.client.internal
+package app.dvpn.libtailscale.client.internal.adapter
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,7 +16,7 @@ internal class TailscaleApiAdapter(
 
     suspend fun get(
         endpoint: Endpoint,
-        body: Any?,
+        body: Any? = null,
     ): LocalAPIResponse {
         return request(endpoint, Method.Get, body)
     }
@@ -49,8 +49,9 @@ internal class TailscaleApiAdapter(
     }
 
     enum class Endpoint(val path: String) {
-        Prefs("prefs"),
+        Preferences("prefs"),
         Start("start"),
+        Status("status"),
         Logout("logout");
     }
 

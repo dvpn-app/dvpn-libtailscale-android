@@ -1,4 +1,4 @@
-package app.dvpn.libtailscale.client.internal
+package app.dvpn.libtailscale.client.internal.adapter
 
 
 import java.io.InputStream
