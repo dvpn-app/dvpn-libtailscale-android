@@ -1,4 +1,4 @@
-package app.dvpn.libtailscale.client.internal.model
+package app.dvpn.libtailscale.internal.api.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -69,20 +69,7 @@ internal data class PeerStatus(
     val expired: Boolean? = null,
     @SerialName("Location")
     val location: Location? = null,
-) {
-    fun computedName(status: IpnStatus): String {
-        val name = dnsName
-        val suffix = status.currentTailnet?.magicDNSSuffix
-
-        suffix ?: return name
-
-        if (!(name.endsWith(".$suffix."))) {
-            return name
-        }
-
-        return name.dropLast(suffix.count() + 2)
-    }
-}
+)
 
 @Serializable
 internal data class ExitNodeStatus(

@@ -1,36 +1,34 @@
 @file:Suppress("ConstPropertyName")
 
-package app.dvpn.libtailscale.client.internal.adapter
+package app.dvpn.libtailscale.internal.api.adapter
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
 import libtailscale.LocalAPIResponse
 import kotlin.coroutines.CoroutineContext
 
 internal class TailscaleApiAdapter(
     private val api: libtailscale.Application,
-    private val json: Json,
     private val coroutineContext: CoroutineContext = Dispatchers.IO,
 ) {
 
     suspend fun get(
         endpoint: Endpoint,
-        body: Any? = null,
+        body: ByteArray? = null,
     ): LocalAPIResponse {
         return request(endpoint, Method.Get, body)
     }
 
     suspend fun post(
         endpoint: Endpoint,
-        body: Any? = null,
+        body: ByteArray? = null,
     ): LocalAPIResponse {
         return request(endpoint, Method.Post, body)
     }
 
     suspend fun patch(
         endpoint: Endpoint,
-        body: Any?,
+        body: ByteArray?,
     ): LocalAPIResponse {
         return request(endpoint, Method.Patch, body)
     }
@@ -38,19 +36,14 @@ internal class TailscaleApiAdapter(
     private suspend fun request(
         endpoint: Endpoint,
         method: Method,
-        body: Any?,
+        body: ByteArray?,
     ): LocalAPIResponse {
         return withContext(coroutineContext) {
-            val bodyInputStream = body
-                ?.let(json::encodeToString)
-                ?.toByteArray()
-                ?.let(::InputStreamAdapter)
-
             api.callLocalAPI(
                 RequestTimeoutMillis,
                 method.value,
                 "$BaseUrl/${endpoint.path}",
-                bodyInputStream,
+                body?.let(::InputStreamAdapter),
             )
         }
     }
@@ -58,8 +51,10 @@ internal class TailscaleApiAdapter(
     enum class Endpoint(val path: String) {
         Preferences("prefs"),
         Start("start"),
+        LoginInteractive("login-interactive"),
         Status("status"),
         CurrentProfile("profiles/current"),
+        Profiles("profiles/"),
         Logout("logout"),
         EnableExitNode("set-use-exit-node-enabled?enabled=true"),
         DisableExitNode("set-use-exit-node-enabled?enabled=false"),
@@ -72,7 +67,7 @@ internal class TailscaleApiAdapter(
     }
 
     private companion object {
-        private const val BaseUrl = "/localapi/v0/"
+        private const val BaseUrl = "/localapi/v0"
         private const val RequestTimeoutMillis = 10_000L
     }
 }

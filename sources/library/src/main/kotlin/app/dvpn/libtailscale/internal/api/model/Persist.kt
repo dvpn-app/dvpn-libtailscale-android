@@ -1,6 +1,6 @@
 @file:Suppress("PropertyName")
 
-package app.dvpn.libtailscale.client.internal.model
+package app.dvpn.libtailscale.internal.api.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

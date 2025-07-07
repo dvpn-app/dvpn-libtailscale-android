@@ -1,4 +1,4 @@
-package app.dvpn.libtailscale.client.internal.model
+package app.dvpn.libtailscale.internal.api.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -7,7 +7,7 @@ import java.net.URL
 @Serializable
 internal data class LoginProfile(
     @SerialName("ID")
-    var id: String,
+    val id: String,
     @SerialName("Name")
     val name: String,
     @SerialName("Key")
@@ -20,25 +20,7 @@ internal data class LoginProfile(
     val localUserID: String,
     @SerialName("ControlURL")
     var controlURL: String? = null,
-) {
-    fun isEmpty(): Boolean {
-        return id.isEmpty()
-    }
-
-    private fun isUsingCustomControlServer(): Boolean {
-        return controlURL != null && controlURL != "https://controlplane.tailscale.com"
-    }
-
-    fun customControlServerHostname(): String? {
-        if (!isUsingCustomControlServer()) return null
-
-        return try {
-            URL(controlURL).host
-        } catch (e: Exception) {
-            null
-        }
-    }
-}
+)
 
 @Serializable
 internal data class UserProfile(
@@ -50,11 +32,7 @@ internal data class UserProfile(
     val loginName: String,
     @SerialName("ProfilePicURL")
     val profilePicURL: String? = null,
-) {
-    fun isTaggedDevice(): Boolean {
-        return loginName == "tagged-devices"
-    }
-}
+)
 
 @Serializable
 internal data class NetworkProfile(
