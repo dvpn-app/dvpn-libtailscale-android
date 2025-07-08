@@ -17,53 +17,43 @@ internal class TailscaleApi(
     private val json: Json,
     private val adapter: TailscaleApiAdapter,
 ) {
-
-    suspend fun start(options: StartOptions): Result<Unit> {
-        return runCatching { json.encodeToString(options).toByteArray() }
-            .mapCatching { body -> adapter.post(Endpoint.Start, body) }
+    suspend fun start(options: StartOptions) {
+        val body = json.encodeToString(options).toByteArray()
+        adapter.post(Endpoint.Start, body)
     }
 
-    suspend fun loginInteractive(): Result<Unit> {
-        return runCatching { adapter.post(Endpoint.LoginInteractive) }
+    suspend fun loginInteractive() {
+        adapter.post(Endpoint.LoginInteractive)
     }
 
-    suspend fun getStatus(): Result<IpnStatus> {
-        return runCatching { adapter.get(Endpoint.Status) }
-            .mapCatching { response -> response.decode() }
+    suspend fun getStatus(): IpnStatus {
+        return adapter.get(Endpoint.Status).decode()
     }
 
-    suspend fun getSettings(): Result<TailscaleSettings> {
-        return runCatching { adapter.get(Endpoint.Preferences) }
-            .mapCatching { response -> response.decode() }
+    suspend fun getSettings(): TailscaleSettings {
+        return adapter.get(Endpoint.Preferences).decode()
     }
 
-    suspend fun editSettings(patch: TailscaleSettings.Companion.() -> String): Result<TailscaleSettings> {
-        return runCatching { patch(TailscaleSettings.Companion).toByteArray() }
-            .mapCatching { data -> adapter.patch(Endpoint.Preferences, data) }
-            .mapCatching { response -> response.decode() }
+    suspend fun editSettings(patch: TailscaleSettings.Companion.() -> String): TailscaleSettings {
+        val data = patch(TailscaleSettings.Companion).toByteArray()
+        return adapter.patch(Endpoint.Preferences, data).decode()
     }
 
-    suspend fun setUseExitNode(enabled: Boolean): Result<TailscaleSettings> {
-        return runCatching {
-            val endpoint = if (enabled) Endpoint.EnableExitNode else Endpoint.DisableExitNode
-            adapter.post(endpoint)
-        }.mapCatching { response ->
-            response.decode()
-        }
+    suspend fun setUseExitNode(enabled: Boolean): TailscaleSettings {
+        val endpoint = if (enabled) Endpoint.EnableExitNode else Endpoint.DisableExitNode
+        return adapter.post(endpoint).decode()
     }
 
-    suspend fun getProfile(): Result<LoginProfile> {
-        return runCatching { adapter.get(Endpoint.CurrentProfile) }
-            .mapCatching { response -> response.decode() }
+    suspend fun getProfile(): LoginProfile {
+        return adapter.get(Endpoint.CurrentProfile).decode()
     }
 
-    suspend fun getProfiles(): Result<List<LoginProfile>> {
-        return runCatching { adapter.get(Endpoint.Profiles) }
-            .mapCatching { response -> response.decode() }
+    suspend fun getProfiles(): List<LoginProfile> {
+        return adapter.get(Endpoint.Profiles).decode()
     }
 
-    suspend fun logout(): Result<Unit> {
-        return runCatching { adapter.post(Endpoint.Logout) }
+    suspend fun logout() {
+        adapter.post(Endpoint.Logout)
     }
 
     private inline fun <reified T : Any> LocalAPIResponse.decode(): T {

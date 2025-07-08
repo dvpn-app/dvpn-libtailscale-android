@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import java.net.URL
 
 @Serializable
-internal data class LoginProfile(
+data class LoginProfile(
     @SerialName("ID")
     val id: String,
     @SerialName("Name")
@@ -23,7 +23,7 @@ internal data class LoginProfile(
 )
 
 @Serializable
-internal data class UserProfile(
+data class UserProfile(
     @SerialName("ID")
     val id: Long,
     @SerialName("DisplayName")
@@ -35,7 +35,7 @@ internal data class UserProfile(
 )
 
 @Serializable
-internal data class NetworkProfile(
+data class NetworkProfile(
     @SerialName("MagicDNSName")
     var magicDNSName: String? = null,
     @SerialName("DomainName")
