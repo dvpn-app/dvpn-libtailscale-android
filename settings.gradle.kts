@@ -20,5 +20,7 @@ includeBuild("build-settings")
 includeBuild("build-conventions")
 
 include(
-    ":library"
+    ":sources:library",
+
+    ":example"
 )

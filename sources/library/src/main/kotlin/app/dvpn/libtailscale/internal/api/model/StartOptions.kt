@@ -5,10 +5,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class StartOptions(
-    @SerialName("FrontendLogID")
-    val frontendLogID: String? = null,
     @SerialName("UpdatePrefs")
-    val updatePrefs: TailscaleSettings? = null,
+    val settings: TailscaleSettings? = null,
     @SerialName("AuthKey")
     val authKey: String? = null,
+    @SerialName("FrontendLogID")
+    val frontendLogID: String? = null,
 )
