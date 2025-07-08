@@ -1,5 +1,6 @@
 package app.dvpn.libtailscale.internal.api.model
 
+import app.dvpn.libtailscale.TailscaleJson
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -61,69 +62,69 @@ internal data class TailscaleSettings(
             return buildMap {
                 controlURL?.let {
                     put("ControlURL", it)
-                    put("ControlURLSet", "true")
+                    put("ControlURLSet", true)
                 }
                 routeAll?.let {
                     put("RouteAll", it)
-                    put("RouteAllSet", "true")
+                    put("RouteAllSet", true)
                 }
                 allowsSingleHosts?.let {
                     put("AllowsSingleHosts", it)
-                    put("AllowsSingleHostsSet", "true")
+                    put("AllowsSingleHostsSet", true)
                 }
                 corpDNS?.let {
                     put("CorpDNS", it)
-                    put("CorpDNSSet", "true")
+                    put("CorpDNSSet", true)
                 }
                 wantRunning?.let {
                     put("WantRunning", it)
-                    put("WantRunningSet", "true")
+                    put("WantRunningSet", true)
                 }
                 loggedOut?.let {
                     put("LoggedOut", it)
-                    put("LoggedOutSet", "true")
+                    put("LoggedOutSet", true)
                 }
                 shieldsUp?.let {
                     put("ShieldsUp", it)
-                    put("ShieldsUpSet", "true")
+                    put("ShieldsUpSet", true)
                 }
                 advertiseRoutes?.let {
                     put("AdvertiseRoutes", it)
-                    put("AdvertiseRoutesSet", "true")
+                    put("AdvertiseRoutesSet", true)
                 }
                 advertiseTags?.let {
                     put("AdvertiseTags", it)
-                    put("AdvertiseTagsSet", "true")
+                    put("AdvertiseTagsSet", true)
                 }
                 exitNodeID?.let {
                     put("ExitNodeID", it)
-                    put("ExitNodeIDSet", "true")
+                    put("ExitNodeIDSet", true)
                 }
                 exitNodeAllowLANAccess?.let {
                     put("ExitNodeAllowLANAccess", it)
-                    put("ExitNodeAllowLANAccessSet", "true")
+                    put("ExitNodeAllowLANAccessSet", true)
                 }
                 config?.let {
                     put("Config", it)
-                    put("ConfigSet", "true")
+                    put("ConfigSet", true)
                 }
                 forceDaemon?.let {
                     put("ForceDaemon", it)
-                    put("ForceDaemonSet", "true")
+                    put("ForceDaemonSet", true)
                 }
                 hostName?.let {
                     put("HostName", it)
-                    put("HostNameSet", "true")
+                    put("HostNameSet", true)
                 }
                 autoUpdate?.let {
                     put("AutoUpdate", it)
-                    put("AutoUpdateSet", "true")
+                    put("AutoUpdateSet", true)
                 }
                 internalExitNodePrior?.let {
                     put("InternalExitNodePrior", it)
-                    put("InternalExitNodePriorSet", "true")
+                    put("InternalExitNodePriorSet", true)
                 }
-            }.let(Json::encodeToString)
+            }.let(TailscaleJson::encodeToString)
         }
     }
 }

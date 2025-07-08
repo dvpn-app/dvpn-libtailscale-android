@@ -40,7 +40,7 @@ interface Tailscale {
             val dnsProvider = DNSConfigProvider(context)
             val preferences = TailscalePreferences(
                 json = TailscaleJson,
-                delegate = context.getSharedPreferences("dvpn_libtailscale_prefs", MODE_PRIVATE)
+                delegate = context.getSharedPreferences("secret_shared_prefs", MODE_PRIVATE)
             )
             val application = Libtailscale.start(
                 context.filesDir.absolutePath,
@@ -57,7 +57,7 @@ interface Tailscale {
     }
 }
 
-private val TailscaleJson = Json {
+internal val TailscaleJson = Json {
     ignoreUnknownKeys = true
     serializersModule = SerializersModule {
         contextual(Any::class, AnySerializer)

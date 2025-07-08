@@ -16,17 +16,17 @@ internal class TailscalePreferences(
     }
 
     override fun getString(key: String, defValue: String?): String? {
-        if (!delegate.contains(key)) throw NoSuchKeyException()
+        if (!delegate.contains(key)) return defValue
         return delegate.getString(key, defValue)
     }
 
     override fun getBoolean(key: String, defValue: Boolean): Boolean {
-        if (!delegate.contains(key)) throw NoSuchKeyException()
+        if (!delegate.contains(key)) return defValue
         return delegate.getBoolean(key, defValue)
     }
 
-    override fun getStringSet(key: String, defValues: Set<String>?): MutableSet<String>? {
-        if (!delegate.contains(key)) throw NoSuchKeyException()
+    override fun getStringSet(key: String, defValues: Set<String>?): Set<String>? {
+        if (!delegate.contains(key)) return defValues
         return delegate.getStringSet(key, defValues)
     }
 
