@@ -21,6 +21,7 @@ includeBuild("build-conventions")
 
 include(
     ":sources:library",
+    ":sources:libtailscale",
 
     ":example"
 )
