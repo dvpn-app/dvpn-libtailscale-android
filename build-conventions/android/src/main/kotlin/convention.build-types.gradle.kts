@@ -4,25 +4,8 @@ import app.dvpn.environment.Environment
 import app.dvpn.environment.config.BuildConfigField
 
 configure<BaseExtension> {
-    signingConfigs {
-        getByName("debug") {
-            val env = Environment.debug
-            storeFile = File("${project.rootDir}/signing/debug.keystore")
-            storePassword = env.signing.storePassword
-            keyAlias = env.signing.keyAlias
-            keyPassword = env.signing.keyPassword
-        }
-        create("release") {
-            val env = Environment.production
-            storeFile = File("${project.rootDir}/signing/release.keystore")
-            storePassword = env.signing.storePassword
-            keyAlias = env.signing.keyAlias
-            keyPassword = env.signing.keyPassword
-        }
-    }
     buildTypes {
         getByName("release") {
-            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = !isAndroidLibrary
             isShrinkResources = !isAndroidLibrary
             isDebuggable = false
@@ -35,7 +18,6 @@ configure<BaseExtension> {
         }
         getByName("debug") {
             versionNameSuffix("-dev")
-            signingConfig = signingConfigs.getByName("debug")
             isMinifyEnabled = false
             isShrinkResources = false
             isDebuggable = true
