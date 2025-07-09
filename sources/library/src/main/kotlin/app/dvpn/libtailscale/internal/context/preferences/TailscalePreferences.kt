@@ -35,5 +35,3 @@ internal class TailscalePreferences(
         private const val KeyPrefixStateStore = "statestore-"
     }
 }
-
-private class NoSuchKeyException : Exception("no such key")

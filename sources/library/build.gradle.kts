@@ -6,7 +6,7 @@ plugins {
 android.namespace = "app.dvpn.libtailscale"
 
 dependencies {
-    implementation(fileTree("${rootDir}/libs") {
+    api(fileTree("${rootDir}/libs") {
         setIncludes(listOf("*aar", "*.jar"))
     })
     implementation(libs.androidxCoreKtx)

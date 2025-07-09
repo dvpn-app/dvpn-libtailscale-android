@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.net.VpnService
 import android.system.OsConstants
+import android.util.Log
 import app.dvpn.libtailscale.Tailscale
 import java.util.UUID
 
@@ -44,7 +45,7 @@ abstract class TailscaleVPNService : VpnService(), libtailscale.IPNService {
                 START_STICKY
             }
 
-            "android.net.VpnService" -> {
+            ActionSystemStartVPN -> {
                 client.enableVPN(this)
                 START_STICKY
             }
@@ -92,5 +93,6 @@ abstract class TailscaleVPNService : VpnService(), libtailscale.IPNService {
         const val ActionStartVPN = "app.dvpn.action.START_VPN"
         const val ActionStopVPN = "app.dvpn.action.STOP_VPN"
         const val ActionRestartVPN = "app.dvpn.action.RESTART_VPN"
+        const val ActionSystemStartVPN = "android.net.VpnService"
     }
 }
