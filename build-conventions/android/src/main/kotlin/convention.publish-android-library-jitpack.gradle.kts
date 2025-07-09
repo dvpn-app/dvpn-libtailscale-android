@@ -44,12 +44,6 @@ afterEvaluate {
                             email.set("punk.dvpn@proton.me")
                         }
                     }
-                    
-                    scm {
-                        connection.set("scm:git:git://github.com/dvpn-app/dvpn-libtailscale-android.git")
-                        developerConnection.set("scm:git:ssh://github.com/dvpn-app/dvpn-libtailscale-android.git")
-                        url.set("https://github.com/dvpn-app/dvpn-libtailscale-android")
-                    }
                 }
             }
         }

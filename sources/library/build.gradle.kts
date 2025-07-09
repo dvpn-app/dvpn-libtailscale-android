@@ -1,5 +1,5 @@
 plugins {
-    id("convention.publish-android-library")
+    id("convention.publish-android-library-jitpack")
     kotlin("plugin.serialization") version libs.versions.kotlin
 }
 
