@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "app.dvpn.libtailscale"
-version = "0.1.0"
+version = "0.1.6"
 
 android {
     publishing {
@@ -23,7 +23,7 @@ afterEvaluate {
                 
                 groupId = "app.dvpn.libtailscale"
                 artifactId = project.name
-                version = "0.1.0"
+                version = "0.1.6"
                 
                 pom {
                     name.set(project.name)
