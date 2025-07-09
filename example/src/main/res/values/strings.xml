@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">dvpn</string>
+    <string name="provider_authority">app.dvpn.fileprovider</string>
+</resources>
