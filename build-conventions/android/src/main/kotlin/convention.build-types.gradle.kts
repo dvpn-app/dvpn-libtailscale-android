@@ -44,27 +44,6 @@ configure<BaseExtension> {
                 .map { it.asClassField }
                 .onEach(::addBuildConfigField)
         }
-        create("stage") {
-            versionNameSuffix("")
-            signingConfig = signingConfigs.getByName("debug")
-            isMinifyEnabled = true
-            isShrinkResources = !isAndroidLibrary
-            isDebuggable = false
-            matchingFallbacks += listOf("release")
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            )
-            Environment.debug.buildConfig
-                .map { it.asClassField }
-                .onEach(::addBuildConfigField)
-            addBuildConfigField(ClassFieldImpl("boolean", "DEBUG", "true"))
-        }
-        create("autoTest") {
-            initWith(getByName("debug"))
-            matchingFallbacks += listOf("release")
-            isMinifyEnabled = false
-            isShrinkResources = false
-        }
     }
 }
 

@@ -18,8 +18,6 @@ android {
         applicationId = "app.dvpn.libtailscale"
     }
 
-    testBuildType = "autoTest"
-
     lint {
         abortOnError = false
         warningsAsErrors = false

@@ -72,15 +72,6 @@ configure<BaseExtension> {
         )
     }
 
-    testOptions {
-        execution = "ANDROIDX_TEST_ORCHESTRATOR"
-
-        unitTests {
-            isReturnDefaultValues = true
-            isIncludeAndroidResources = true
-        }
-    }
-
     with(buildFeatures) {
         buildConfig = true
         viewBinding = true
